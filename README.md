@@ -59,7 +59,5 @@ npm run preview
 - Tailwind CSS
 - Google Fonts (Lato)
 
-## Design Source
 
-Design from Figma: https://www.figma.com/design/uGihbWJYiFeNnxM6Z3dwuy/Untitled?node-id=9-392
 
