@@ -20,7 +20,7 @@ A faithful recreation of the GOG.com game product page for "Heroes of Might and 
 
 **The easiest way to view the page:**
 
-Simply open `index-standalone.html` in your web browser (double-click the file). No installation or setup needed!
+Simply open `index.html` in your web browser (double-click the file). No installation or setup needed!
 
 ## Advanced: React Development Setup
 
