@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heroes of Might and Magic® 3: Complete - GOG.com</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #1A1A1D;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(200, 200, 200, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(200, 200, 200, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(180, 180, 180, 0.03) 0%, transparent 60%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(255, 255, 255, 0.008) 1px,
+                    rgba(255, 255, 255, 0.008) 2px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(255, 255, 255, 0.008) 1px,
+                    rgba(255, 255, 255, 0.008) 2px
+                );
+            background-size: 100% 100%, 100% 100%, 100% 100%, 2px 2px, 2px 2px;
+            mix-blend-mode: hard-light;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background-color: #1A1A1D;
+            padding: 24px 48px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #AFAEAE;
+            padding: 8px 12px;
+            text-decoration: none;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #FFFFFF;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            max-width: 600px;
+            margin: 0 16px;
+        }
+
+        .search-bar {
+            background-color: #313134;
+            border-radius: 40px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            border: 0.5px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar:focus-within {
+            background-color: #3a3a3d;
+            border-color: #CB39D4;
+        }
+
+        .search-bar i {
+            color: #AFAEAE;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .search-bar .search-close {
+            color: #CB39D4;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .search-bar .search-close:hover {
+            opacity: 0.8;
+        }
+
+        .search-bar .search-close.active {
+            display: block;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 16px;
+            line-height: 24px;
+            flex: 1;
+            outline: none;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .search-bar input::placeholder {
+            color: #AFAEAE;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-icon-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-icon-btn i {
+            color: #AFAEAE;
+            font-size: 32px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-icon-btn:hover i {
+            color: #FFFFFF;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 1200px) {
+            .nav-bar {
+                padding: 20px 24px;
+            }
+
+            .nav-center {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-items {
+                gap: 0;
+            }
+
+            .nav-item {
+                padding: 8px 8px;
+                font-size: 14px;
+            }
+
+            .nav-center {
+                margin: 0 12px;
+            }
+
+            .nav-right {
+                gap: 16px;
+            }
+
+            .nav-icon-btn i {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                padding: 16px;
+                flex-wrap: wrap;
+            }
+
+            .nav-items {
+                display: none;
+            }
+
+            .nav-center {
+                order: 3;
+                width: 100%;
+                margin: 16px 0 0 0;
+                max-width: 100%;
+            }
+
+            .nav-left {
+                flex: 1;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            margin-top: 96px;
+            position: relative;
+            height: 757px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(26, 26, 29, 0.6) 0%, rgba(26, 26, 29, 0.3) 50%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Product Info Overlay */
+        .product-info {
+            position: absolute;
+            top: 214px;
+            left: 48px;
+            max-width: 741px;
+            z-index: 2;
+        }
+
+        .product-title {
+            font-size: 40px;
+            line-height: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .product-subtitle {
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .guarantee-text {
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            background-color: #313134;
+            border-radius: 40px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .tag-icon {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .howlong {
+            font-size: 14px;
+            color: #FFFFFF;
+            margin-bottom: 24px;
+        }
+
+        .pricing {
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .original-price {
+            color: #AFAEAE;
+            text-decoration: line-through;
+            font-size: 16px;
+            align-self: flex-end;
+        }
+
+        .discounted-price {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 44px;
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .discount-badge {
+            background-color: #0B7B1F;
+            border-radius: 40px;
+            padding: 2px 4px;
+            font-size: 14px;
+            line-height: 20px;
+            white-space: nowrap;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            padding: 10px 8px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 230px;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #8953A5;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: none;
+            color: white;
+            border: 1px solid #8953A5;
+        }
+
+        .offer-end {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .offer-text {
+            color: #F7DA46;
+            font-size: 14px;
+        }
+
+        /* Timer Animation */
+        @keyframes ring {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10%, 30% {
+                transform: rotate(-10deg);
+            }
+            20%, 40% {
+                transform: rotate(10deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .animate-ring {
+            animation: ring 2s ease-in-out infinite;
+            transform-origin: center top;
+        }
+
+        .preservation-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 0;
+        }
+
+        .preservation-logo {
+            width: 72px;
+            height: 72px;
+        }
+
+        .preservation-text {
+            font-size: 16px;
+            max-width: 456px;
+        }
+
+        .read-more-link {
+            color: #e3bfe0;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Section Padding */
+        .section {
+            padding: 80px 48px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            line-height: 44px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        /* Digital Extras */
+        .digital-extras {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .extra-item {
+            width: 318px;
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .extra-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .extra-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Game Media */
+        .game-media-main {
+            position: relative;
+            height: 592px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .game-media-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .play-button {
+            width: 128px;
+            height: 128px;
+            font-size: 128px;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .play-overlay:hover .play-button {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .thumbnail {
+            width: 318px;
+            height: 178px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .thumbnail:hover {
+            border-color: #8953A5;
+        }
+
+        .thumbnail.active {
+            border: 2px solid white;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail .play-button-small {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            font-size: 48px;
+            color: #FFFFFF;
+        }
+
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #313134;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-dot:hover {
+            background-color: #8953A5;
+        }
+
+        .nav-dot.active {
+            background-color: #FFFFFF;
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 969px;
+            margin: 0 auto;
+        }
+
+        .content-section + .content-section,
+        .content-section + .tech-section,
+        .tech-section + .tech-section {
+            margin-top: 80px;
+        }
+
+        .content-text {
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+        }
+
+        /* Player Consensus */
+        .consensus-box {
+            background-color: #1D1D20;
+            border: 0.75px solid #79797e;
+            border-radius: 8px;
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            min-height: 272px;
+        }
+
+        .collector-score {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            flex-shrink: 0;
+        }
+
+        .score-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .consensus-details {
+            flex: 1;
+        }
+
+        .consensus-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .consensus-tag {
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .tag-green {
+            background-color: #1E2F26;
+            color: #4ADE80;
+        }
+
+        .tag-yellow {
+            background-color: #332D1D;
+            color: #F7DA46;
+        }
+
+        .reviews-link {
+            background-color: #313134;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reviews-link:hover {
+            background-color: #3F3F43;
+        }
+
+        /* Collector's Note */
+        .note-box {
+            background-color: #313134;
+            border-radius: 8px;
+            padding: 20px 16px;
+            margin-bottom: 20px;
+        }
+
+        .note-box p {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 8px;
+        }
+
+        .btn-ai {
+            background: linear-gradient(to bottom, #8953A5, #35203f);
+            color: white;
+            padding: 10px 8px;
+            border-radius: 4px;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Technical Briefing */
+        .tech-section {
+            max-width: 886px;
+            margin: 0 auto;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .tech-subtitle {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #AFAEAE;
+            margin-bottom: 16px;
+        }
+
+        .requirements-box {
+            background-color: #313134;
+            border-radius: 8px;
+            padding: 24px 16px;
+            margin-bottom: 8px;
+        }
+
+        .requirements-grid {
+            display: flex;
+            gap: 40px;
+        }
+
+        .requirements-col {
+            flex: 1;
+        }
+
+        .requirements-title {
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 1px solid white;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+
+        .requirement-item {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 8px;
+        }
+
+        .requirement-item strong {
+            font-weight: 700;
+        }
+
+        .languages-box {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .languages-box p {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 8px;
+        }
+
+        .languages-box ul {
+            list-style: disc;
+            padding-left: 24px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        /* Compatibility Check Styles */
+        .compatibility-link {
+            color: #CB39D4;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .compatibility-link:hover {
+            color: #E055E8;
+            text-decoration: underline;
+        }
+
+        .compatibility-result {
+            margin-top: 24px;
+            background-color: #1D1D20;
+            border: 1px solid #313134;
+            border-radius: 8px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .compatibility-result.active {
+            max-height: 1000px;
+            opacity: 1;
+            animation: compatibilitySlideIn 0.4s ease;
+        }
+
+        @keyframes compatibilitySlideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .compatibility-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #313134;
+            background-color: #252528;
+        }
+
+        .compatibility-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .compatibility-icon {
+            font-size: 28px;
+            color: #CB39D4;
+        }
+
+        .compatibility-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin: 0;
+        }
+
+        .compatibility-close {
+            background: none;
+            border: none;
+            color: #AFAEAE;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .compatibility-close:hover {
+            color: #FFFFFF;
+        }
+
+        .compatibility-body {
+            padding: 24px;
+        }
+
+        .compatibility-overall {
+            margin-bottom: 24px;
+        }
+
+        .overall-status {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .status-icon {
+            font-size: 32px;
+            margin-top: 4px;
+        }
+
+        .status-icon.status-pass {
+            color: #4ADE80;
+        }
+
+        .status-icon.status-warning {
+            color: #FACC15;
+        }
+
+        .status-icon.status-fail {
+            color: #EF4444;
+        }
+
+        .overall-verdict {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .overall-message {
+            font-size: 14px;
+            color: #AFAEAE;
+        }
+
+        .playability-estimate {
+            background-color: #252528;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .estimate-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #313134;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .estimate-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ADE80 0%, #22C55E 100%);
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: estimateGrow 0.8s ease;
+        }
+
+        @keyframes estimateGrow {
+            from {
+                width: 0%;
+            }
+        }
+
+        .estimate-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4ADE80;
+            text-align: center;
+        }
+
+        .spec-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background-color: #252528;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            animation: specItemFadeIn 0.4s ease backwards;
+        }
+
+        .spec-item:nth-child(1) { animation-delay: 0.1s; }
+        .spec-item:nth-child(2) { animation-delay: 0.15s; }
+        .spec-item:nth-child(3) { animation-delay: 0.2s; }
+        .spec-item:nth-child(4) { animation-delay: 0.25s; }
+        .spec-item:nth-child(5) { animation-delay: 0.3s; }
+
+        @keyframes specItemFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .spec-item.spec-warning {
+            border-color: #FACC15;
+            background-color: rgba(250, 204, 21, 0.05);
+        }
+
+        .spec-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .spec-icon {
+            font-size: 20px;
+            color: #CB39D4;
+        }
+
+        .spec-label span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #AFAEAE;
+            min-width: 80px;
+        }
+
+        .spec-value {
+            font-size: 14px;
+            color: #FFFFFF;
+            flex: 2;
+        }
+
+        .spec-status {
+            font-size: 20px;
+            margin-left: 12px;
+        }
+
+        .spec-status.status-pass {
+            color: #4ADE80;
+        }
+
+        .spec-status.status-warning {
+            color: #FACC15;
+        }
+
+        .spec-status.status-fail {
+            color: #EF4444;
+        }
+
+        .compatibility-note {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background-color: rgba(203, 57, 212, 0.1);
+            border-left: 3px solid #CB39D4;
+            border-radius: 6px;
+        }
+
+        .compatibility-note i {
+            font-size: 20px;
+            color: #CB39D4;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .compatibility-note p {
+            font-size: 14px;
+            color: #FFFFFF;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hardware-profile-info {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #313134;
+        }
+
+        .hardware-profile-info p {
+            font-size: 12px;
+            color: #6B6B6F;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hardware-profile-info p + p {
+            margin-top: 4px;
+        }
+
+        .profile-synced {
+            display: block;
+        }
+
+        .profile-action {
+            color: #CB39D4;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .profile-action:hover {
+            color: #E055E8;
+            text-decoration: underline;
+        }
+
+        /* Reviews Modal Styles */
+        .reviews-modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .reviews-modal-backdrop.active {
+            display: flex;
+        }
+
+        .reviews-modal-panel {
+            background-color: #1D1D20;
+            border: 1px solid #313134;
+            border-radius: 8px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .reviews-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #313134;
+            flex-shrink: 0;
+        }
+
+        .reviews-modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .reviews-modal-subtitle {
+            font-size: 14px;
+            color: #AFAEAE;
+            margin-top: 4px;
+        }
+
+        .reviews-modal-close {
+            background: none;
+            border: none;
+            color: #AFAEAE;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .reviews-modal-close:hover {
+            color: #FFFFFF;
+        }
+
+        .reviews-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .review-item {
+            background-color: #252528;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            animation: reviewFadeIn 0.3s ease;
+        }
+
+        @keyframes reviewFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .review-author-section {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8953A5 0%, #CB39D4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            flex-shrink: 0;
+        }
+
+        .review-author-info {
+            flex: 1;
+        }
+
+        .review-author {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 2px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: #6B6B6F;
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .review-rating-badge {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .review-rating-badge.positive {
+            background-color: #1E2F26;
+            color: #4ADE80;
+        }
+
+        .review-rating-badge.negative {
+            background-color: #2F1E1E;
+            color: #EF4444;
+        }
+
+        .review-rating-badge.mixed {
+            background-color: #332D1D;
+            color: #F7DA46;
+        }
+
+        .review-hours {
+            font-size: 12px;
+            color: #6B6B6F;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .review-helpful {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #6B6B6F;
+        }
+
+        .review-helpful-btn {
+            background: none;
+            border: 1px solid #313134;
+            border-radius: 4px;
+            padding: 6px 12px;
+            color: #AFAEAE;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .review-helpful-btn:hover {
+            border-color: #4ADE80;
+            color: #4ADE80;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #AFAEAE;
+            font-size: 14px;
+        }
+
+        .full-reviews-link {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid #313134;
+            background-color: #252528;
+        }
+
+        .full-reviews-link a {
+            color: #CB39D4;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .full-reviews-link a:hover {
+            color: #E055E8;
+            text-decoration: underline;
+        }
+
+        /* Modal Styles */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal-panel {
+            background-color: #1D1D20;
+            border: 1px solid #313134;
+            border-radius: 8px;
+            max-width: 768px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #313134;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #AFAEAE;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #FFFFFF;
+        }
+
+        .modal-main {
+            padding: 24px;
+        }
+
+        .confirmation-banner {
+            background-color: #1E2F26;
+            border: 1px solid #4ADE80;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .confirmation-banner i {
+            color: #4ADE80;
+            font-size: 24px;
+        }
+
+        .confirmation-text {
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .upsell-headline {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .upsell-subtext {
+            font-size: 16px;
+            color: #AFAEAE;
+            margin-bottom: 24px;
+        }
+
+        .upsell-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .series-game-card {
+            background-color: #313134;
+            border: 1px solid #3a3a3d;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .series-game-card:hover {
+            border-color: #8953A5;
+        }
+
+        .series-game-image {
+            width: 100%;
+            height: 150px;
+            background-color: #1A1A1D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #AFAEAE;
+            font-size: 14px;
+        }
+
+        .series-game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .series-game-info {
+            padding: 12px;
+        }
+
+        .series-game-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .series-game-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .series-game-btn {
+            background-color: #8953A5;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .series-game-btn:hover {
+            background-color: #9f69b5;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-top: 1px solid #313134;
+        }
+
+        .modal-total {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .modal-footer-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn-secondary {
+            background: none;
+            color: #FFFFFF;
+            border: 1px solid #8953A5;
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .modal-btn-secondary:hover {
+            background-color: #313134;
+        }
+
+        .modal-btn-primary {
+            background-color: #8953A5;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: #9f69b5;
+        }
+
+        /* GOG Preservation Modal */
+        .preservation-modal-content {
+            padding: 24px;
+        }
+
+        .preservation-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .preservation-modal-header .shield-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .preservation-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .preservation-modal-body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 24px 0;
+            border-top: 1px solid #313134;
+            border-bottom: 1px solid #313134;
+            margin-bottom: 24px;
+        }
+
+        .promise-item {
+            display: flex;
+            gap: 16px;
+        }
+
+        .promise-icon {
+            font-size: 32px;
+            color: #AFAEAE;
+            margin-top: 4px;
+        }
+
+        .promise-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .promise-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #AFAEAE;
+        }
+        
+        .preservation-modal-footer a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .preservation-modal-footer a:hover {
+            color: #e3bfe0;
+        }
+
+        @media (max-width: 768px) {
+            .upsell-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .modal-footer-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .modal-btn-secondary,
+            .modal-btn-primary {
+                width: 100%;
+            }
+
+            .preservation-modal-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Preservation Log */
+        .preservation-log-section {
+            padding: 40px 48px;
+        }
+
+        .preservation-log-container {
+            background-color: #313134;
+            border-radius: 8px;
+            padding: 24px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .preservation-log-container:hover {
+            background-color: #3a3a3d;
+        }
+
+        .preservation-log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .log-icon {
+            font-size: 32px;
+            color: #8953A5;
+        }
+
+        .log-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .log-subtitle {
+            font-size: 14px;
+            color: #AFAEAE;
+        }
+
+        .log-toggle-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .log-toggle-link i {
+            font-size: 20px;
+        }
+
+        .preservation-log-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding-top 0.3s ease-in-out;
+        }
+
+        .preservation-log-container.expanded .preservation-log-body {
+            padding-top: 24px;
+            max-height: 1000px; /* Adjust as needed */
+        }
+
+        .update-group {
+            margin-bottom: 24px;
+        }
+
+        .update-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .update-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .update-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #AFAEAE;
+        }
+
+        .update-item i {
+            font-size: 20px;
+        }
+
+        .icon-success { color: #4ADE80; }
+        .icon-feature { color: #AFAEAE; }
+        .icon-compat { color: #F7DA46; }
+        .icon-cloud { color: #60A5FA; }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <!-- Left Section: Logo & Navigation -->
+        <div class="nav-left">
+            <img src="https://www.figma.com/api/mcp/asset/38107d73-938a-4c9a-bfc6-6c05ea33cf65" alt="GOG Logo" class="logo">
+            <div class="nav-items">
+                <a href="#" class="nav-item">Store</a>
+                <a href="#" class="nav-item">
+                    Library
+                    <i class="ph ph-caret-down"></i>
+                </a>
+                <a href="#" class="nav-item">
+                    Community
+                    <i class="ph ph-caret-down"></i>
+                </a>
+                <a href="#" class="nav-item">
+                    Support
+                    <i class="ph ph-caret-down"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Center Section: Search Bar -->
+        <div class="nav-center">
+            <div class="search-bar">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search for RPG games from the 90s...">
+                <i class="ph ph-x search-close" id="searchClose"></i>
+            </div>
+        </div>
+
+        <!-- Right Section: User Actions -->
+        <div class="nav-right">
+            <button class="nav-icon-btn" aria-label="Wishlist">
+                <i class="ph ph-heart"></i>
+            </button>
+            <button class="nav-icon-btn" aria-label="Shopping Cart">
+                <i class="ph ph-basket"></i>
+            </button>
+            <img src="https://www.figma.com/api/mcp/asset/0cecbe13-bc0d-4a2e-b8db-9e4d31d9f53c" alt="User Avatar" class="avatar">
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <img src="images/hero-knight.jpg" alt="Heroes of Might and Magic 3 - Knight on Horseback" class="hero-image">
+        
+        <!-- Product Info Overlay -->
+        <div class="product-info">
+            <h1 class="product-title">Heroes of Might and Magic® 3: Complete</h1>
+            <h2 class="product-subtitle">By New World Computing, Inc. / Ubisoft</h2>
+            <p class="guarantee-text">DRM-Free Guarantee, Your Game, Forever.</p>
+            
+            <div class="tags">
+                <div class="tag">
+                    <i class="ph ph-calendar tag-icon"></i>
+                    <span>1999</span>
+                </div>
+                <div class="tag">
+                    <i class="ph ph-game-controller tag-icon"></i>
+                    <span>RPG</span>
+                </div>
+                <div class="tag">
+                    <i class="ph ph-users tag-icon"></i>
+                    <span>Multiplayer</span>
+                </div>
+                <div class="tag">
+                    <i class="ph ph-clock tag-icon"></i>
+                    <span>~152.5hrs Playtime</span>
+                </div>
+            </div>
+            
+            <p class="howlong">Game length provided by <u>HowLongToBeat</u></p>
+            
+            <div class="pricing">
+                <span class="original-price">$9.99</span>
+                <span class="discounted-price">
+                    $2.99
+                    <span class="discount-badge">75% Off</span>
+                </span>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-primary" id="addToCollectionBtn">Add to Collection</button>
+                <button class="btn btn-secondary">Add to Wishlist</button>
+            </div>
+            
+            <div class="offer-end">
+                <i class="ph ph-timer animate-ring" style="color: #F7DA46; font-size: 24px;"></i>
+                <span class="offer-text">Offer ends on: 18/10/2025 09:59 GMT</span>
+            </div>
+            
+            <div class="preservation-info">
+                <img src="https://www.figma.com/api/mcp/asset/4bac8c5b-77f3-4554-9416-52579354304c" alt="GOG Preservation" class="preservation-logo">
+                <p class="preservation-text">
+                    This game is a Good Old Game. GOG maintains and preserves it as part of the Good Old Game....<span class="read-more-link" id="readMoreLink">Read more</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- More Than Just the Game -->
+    <div class="section">
+        <h2 class="section-title">More Than Just the Game</h2>
+        <p class="section-subtitle">This GOG edition is preserved with exclusive digital extras:</p>
+        
+        <div class="digital-extras">
+            <div class="extra-item">
+                <div class="extra-icon">
+                    <i class="ph ph-book-open-text" style="font-size: 56px; color: #8953A5;"></i>
+                </div>
+                <p class="extra-title">Game Manuals</p>
+            </div>
+            <div class="extra-item">
+                <div class="extra-icon">
+                    <i class="ph ph-vinyl-record" style="font-size: 56px; color: #8953A5;"></i>
+                </div>
+                <p class="extra-title">Original Soundtrack</p>
+            </div>
+            <div class="extra-item">
+                <div class="extra-icon">
+                    <i class="ph ph-map-trifold" style="font-size: 56px; color: #8953A5;"></i>
+                </div>
+                <p class="extra-title">High-Resolution Maps</p>
+            </div>
+            <div class="extra-item">
+                <div class="extra-icon">
+                    <i class="ph ph-monitor" style="font-size: 56px; color: #8953A5;"></i>
+                </div>
+                <p class="extra-title">HD Wallpapers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Media -->
+    <div class="section">
+        <div class="game-media-main">
+            <img id="mainMediaImage" src="https://www.figma.com/api/mcp/asset/b30af038-73d8-4b9f-b83d-a37dfa4ee5f8" alt="Game Screenshot">
+            <div class="play-overlay">
+                <i class="ph ph-play-circle play-button"></i>
+            </div>
+        </div>
+        
+        <div class="thumbnails">
+            <div class="thumbnail active" data-index="0" data-image="https://www.figma.com/api/mcp/asset/b30af038-73d8-4b9f-b83d-a37dfa4ee5f8">
+                <img src="https://www.figma.com/api/mcp/asset/9fb75b36-e694-4a28-a45f-3d35c3b66bbe" alt="Thumbnail 1">
+                <i class="ph ph-play-circle play-button-small"></i>
+            </div>
+            <div class="thumbnail" data-index="1" data-image="https://www.figma.com/api/mcp/asset/dc5a37c2-276e-467e-9c65-01afa48b4d88">
+                <img src="https://www.figma.com/api/mcp/asset/dc5a37c2-276e-467e-9c65-01afa48b4d88" alt="Thumbnail 2">
+            </div>
+            <div class="thumbnail" data-index="2" data-image="https://www.figma.com/api/mcp/asset/9f4a8051-5db6-4861-8604-d312308fe53b">
+                <img src="https://www.figma.com/api/mcp/asset/9f4a8051-5db6-4861-8604-d312308fe53b" alt="Thumbnail 3">
+            </div>
+            <div class="thumbnail" data-index="3" data-image="https://www.figma.com/api/mcp/asset/08bcee2a-0e8e-4b23-b4ca-1e1b197c2eb4">
+                <img src="https://www.figma.com/api/mcp/asset/08bcee2a-0e8e-4b23-b4ca-1e1b197c2eb4" alt="Thumbnail 4">
+            </div>
+        </div>
+        
+        <div class="navigation-dots">
+            <div class="nav-dot active" data-index="0"></div>
+            <div class="nav-dot" data-index="1"></div>
+            <div class="nav-dot" data-index="2"></div>
+            <div class="nav-dot" data-index="3"></div>
+        </div>
+    </div>
+
+    <!-- About this Classic -->
+    <div class="content-section">
+        <h2 class="section-title">About this Classic</h2>
+        <p class="content-text">
+            When Erathia's King Gryphonheart is murdered by traitors he is resurrected as an undead warlord who leads a ruthless invasion of his former Kingdom. Little resistance is met until his daughter Catherine, Queen of Enroth, returns to her homeland commanding an army of elite Enrothian warriors. Meanwhile the Necromancers raise large hordes of undead and advance towards the Erathian capitol. Queen Catherine receives the aid of her father's survived generals and embarks on a crusade to reclaim her lost land. You control the greatest.... <span class="read-more">Read more</span>
+        </p>
+    </div>
+
+    <!-- Player Consensus -->
+    <div class="content-section">
+        <h2 class="section-title">The Player Consensus</h2>
+        
+        <div class="consensus-box">
+            <div class="collector-score">
+                <img src="https://www.figma.com/api/mcp/asset/50db22d6-535d-46c3-ad24-7d730216c4ba" alt="Circle Background" class="score-circle">
+                <img src="https://www.figma.com/api/mcp/asset/d25c1ef6-f39b-4ecb-852b-d4d90c185ecb" alt="Circle Foreground" class="score-circle">
+                <div class="score-value">
+                    <div class="score-number">96</div>
+                    <div class="score-label">Collector Score</div>
+                </div>
+            </div>
+            
+            <div class="consensus-details">
+                <div class="consensus-tags">
+                    <span class="consensus-tag tag-green">Timeless Story (98%)</span>
+                    <span class="consensus-tag tag-green">Iconic Soundtrack (96%)</span>
+                </div>
+                <div class="consensus-tags">
+                    <span class="consensus-tag tag-green">Timeless Story (98%)</span>
+                    <span class="consensus-tag tag-yellow">Timeless Story (98%)</span>
+                </div>
+                <div class="reviews-link" id="openReviewsModal">Read all 1,483 Reviews</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collector's Note -->
+    <div class="content-section">
+        <h2 class="section-title">Collector's Note</h2>
+        
+        <div class="note-box">
+            <p>"I first played Chrono Trigger in 1996. It wasn't just a game; it was a formative experience. GOG having this version... is like buying back a piece of my childhood."</p>
+            <p>— a_time_traveler</p>
+        </div>
+        
+        <button class="btn-ai">
+            <i class="ph ph-sparkle" style="font-size: 24px;"></i>
+            <span>Generate Collector's Summary</span>
+        </button>
+    </div>
+
+    <!-- Technical Briefing -->
+    <div class="section tech-section">
+        <h2 class="section-title">Technical Briefing</h2>
+        <p class="tech-subtitle">Is your system ready for this classic adventure? <a href="#" id="compatibilityCheckLink" class="compatibility-link">Run instant compatibility check</a></p>
+        
+        <div class="requirements-box">
+            <div class="requirements-grid">
+                <div class="requirements-col">
+                    <h3 class="requirements-title">Minimum</h3>
+                    <div class="requirement-item"><strong>System</strong>: Windows (10, 11)</div>
+                    <div class="requirement-item"><strong>Processor</strong>: 1.8 GHz</div>
+                    <div class="requirement-item"><strong>Memory</strong>: 2 GB RAM</div>
+                    <div class="requirement-item"><strong>Graphics</strong>: 3D graphics card compatible with DirectX 9.0c</div>
+                    <div class="requirement-item"><strong>DirectX</strong>: DirectX 9.0c</div>
+                </div>
+                <div class="requirements-col">
+                    <h3 class="requirements-title">Recommended</h3>
+                    <div class="requirement-item"><strong>System</strong>: Windows (10, 11)</div>
+                    <div class="requirement-item"><strong>Processor</strong>: 2.5 GHz</div>
+                    <div class="requirement-item"><strong>Memory</strong>: 8 GB RAM</div>
+                    <div class="requirement-item"><strong>Graphics</strong>: NVIDIA GeForce GTX 760</div>
+                    <div class="requirement-item"><strong>DirectX</strong>: DirectX 12</div>
+                </div>
+            </div>
+
+            <!-- Compatibility Result Card -->
+            <div class="compatibility-result" id="compatibilityResult">
+                <div class="compatibility-header">
+                    <div class="compatibility-header-left">
+                        <i class="ph ph-desktop compatibility-icon"></i>
+                        <h3 class="compatibility-title">Your System</h3>
+                    </div>
+                    <button class="compatibility-close" id="compatibilityClose">
+                        <i class="ph ph-x"></i>
+                    </button>
+                </div>
+                
+                <div class="compatibility-body">
+                    <div class="compatibility-overall">
+                        <div class="overall-status">
+                            <i class="ph ph-check-circle status-icon status-pass" id="overallIcon"></i>
+                            <div>
+                                <div class="overall-verdict" id="overallVerdict">System Compatible</div>
+                                <div class="overall-message" id="overallMessage">Your PC meets the recommended specifications</div>
+                            </div>
+                        </div>
+                        <div class="playability-estimate" id="playabilityEstimate">
+                            <div class="estimate-bar">
+                                <div class="estimate-fill" id="estimateFill"></div>
+                            </div>
+                            <div class="estimate-text" id="estimateText">98% likely to run smoothly</div>
+                        </div>
+                    </div>
+
+                    <div class="spec-comparison">
+                        <div class="spec-item">
+                            <div class="spec-label">
+                                <i class="ph ph-monitor-play spec-icon"></i>
+                                <span>System</span>
+                            </div>
+                            <div class="spec-value">Windows 11</div>
+                            <i class="ph ph-check-circle spec-status status-pass"></i>
+                        </div>
+
+                        <div class="spec-item">
+                            <div class="spec-label">
+                                <i class="ph ph-cpu spec-icon"></i>
+                                <span>Processor</span>
+                            </div>
+                            <div class="spec-value">Intel Core i5-9400F @ 2.9 GHz</div>
+                            <i class="ph ph-check-circle spec-status status-pass"></i>
+                        </div>
+
+                        <div class="spec-item">
+                            <div class="spec-label">
+                                <i class="ph ph-memory spec-icon"></i>
+                                <span>Memory</span>
+                            </div>
+                            <div class="spec-value">16 GB RAM</div>
+                            <i class="ph ph-check-circle spec-status status-pass"></i>
+                        </div>
+
+                        <div class="spec-item spec-warning">
+                            <div class="spec-label">
+                                <i class="ph ph-video-camera spec-icon"></i>
+                                <span>Graphics</span>
+                            </div>
+                            <div class="spec-value">NVIDIA GeForce GTX 750 Ti</div>
+                            <i class="ph ph-warning spec-status status-warning"></i>
+                        </div>
+
+                        <div class="spec-item">
+                            <div class="spec-label">
+                                <i class="ph ph-sparkle spec-icon"></i>
+                                <span>DirectX</span>
+                            </div>
+                            <div class="spec-value">DirectX 12</div>
+                            <i class="ph ph-check-circle spec-status status-pass"></i>
+                        </div>
+                    </div>
+
+                    <div class="compatibility-note">
+                        <i class="ph ph-info"></i>
+                        <p>Your graphics card is slightly below the recommended GTX 760, but should handle this classic title. You may experience occasional frame drops in complex scenes.</p>
+                    </div>
+
+                    <div class="hardware-profile-info">
+                        <p class="profile-synced">Based on your hardware profile synced 2 days ago. <span class="profile-action">Run GOG GALAXY for an updated check.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="languages-box">
+            <p>Languages Supported</p>
+            <ul>
+                <li>Audio: English, русский, polski, français</li>
+                <li>Text: English, русский, polski, français</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Preservation Log -->
+    <div class="section preservation-log-section tech-section">
+        <div class="preservation-log-container" id="preservationLogContainer">
+            <div class="preservation-log-header">
+                <div class="log-header-left">
+                    <i class="ph ph-clock-counter-clockwise log-icon"></i>
+                    <div>
+                        <h3 class="log-title">Preservation Log</h3>
+                        <p class="log-subtitle">Latest Update: 13 November 2024</p>
+                    </div>
+                </div>
+                <div class="log-toggle-link">
+                    <span>View all updates</span>
+                    <i id="logToggleIcon" class="ph ph-plus"></i>
+                </div>
+            </div>
+            <div class="preservation-log-body">
+                <div class="update-group">
+                    <h4 class="update-title">Update (13 November 2024)</h4>
+                    <ul>
+                        <li class="update-item">
+                            <i class="ph ph-check-circle icon-success"></i>
+                            <span>Fixed non-playing intros in Russian and French localizations.</span>
+                        </li>
+                        <li class="update-item">
+                            <i class="ph ph-check-circle icon-success"></i>
+                            <span>Fixed windowed mode (F4) in all versions through DDrawCompat.</span>
+                        </li>
+                        <li class="update-item">
+                            <i class="ph ph-check-circle icon-success"></i>
+                            <span>Validated stability and verified compatibility with Windows 10 & 11.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="update-group">
+                    <h4 class="update-title">Update (16 April 2019)</h4>
+                    <ul>
+                        <li class="update-item">
+                            <i class="ph ph-sparkle icon-feature"></i>
+                            <span>Added Russian localization.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="update-group">
+                    <h4 class="update-title">Update 4.0 (09 November 2018)</h4>
+                    <ul>
+                        <li class="update-item">
+                            <i class="ph ph-sparkle icon-feature"></i>
+                            <span>Added Polish localization.</span>
+                        </li>
+                         <li class="update-item">
+                            <i class="ph ph-puzzle-piece icon-compat"></i>
+                            <span>Added dummy IFC20.dll file for HD Mod compatibility.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="update-group">
+                    <h4 class="update-title">Update 4.0 (A) (22 March 2017)</h4>
+                    <ul>
+                        <li class="update-item">
+                            <i class="ph ph-cloud-arrow-up icon-cloud"></i>
+                            <span>Added support for Cloud Saves in GOG Galaxy 1.2+.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upsell Modal -->
+    <div class="modal-backdrop" id="upsellModal">
+        <div class="modal-panel">
+            <header class="modal-header">
+                <h2 class="modal-title">Complete the Saga</h2>
+                <button class="modal-close" id="close-upsell-modal" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </header>
+
+            <main class="modal-main">
+                <!-- Confirmation Banner -->
+                <div class="confirmation-banner">
+                    <i class="ph ph-check-circle"></i>
+                    <p class="confirmation-text">Heroes of Might and Magic® 3: Complete has been added to your collection!</p>
+                </div>
+
+                <!-- Upsell Headline -->
+                <h3 class="upsell-headline">Before you go, consider adding these classics...</h3>
+                <p class="upsell-subtext">You already own 1 of 5 games. Complete the collection for an extra 10% off!</p>
+
+                <!-- Upsell Game Cards -->
+                <div class="upsell-grid">
+                    <!-- Game Card 1 -->
+                    <div class="series-game-card">
+                        <div class="series-game-image">
+                            <span>Game Image</span>
+                        </div>
+                        <div class="series-game-info">
+                            <h4 class="series-game-title">Heroes of Might and Magic® 2: Gold Edition</h4>
+                            <p class="series-game-price">$9.99</p>
+                            <button class="series-game-btn">
+                                <i class="ph ph-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Game Card 2 -->
+                    <div class="series-game-card">
+                        <div class="series-game-image">
+                            <span>Game Image</span>
+                        </div>
+                        <div class="series-game-info">
+                            <h4 class="series-game-title">Heroes of Might and Magic® 4: Complete</h4>
+                            <p class="series-game-price">$9.99</p>
+                            <button class="series-game-btn">
+                                <i class="ph ph-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Game Card 3 -->
+                    <div class="series-game-card">
+                        <div class="series-game-image">
+                            <span>Game Image</span>
+                        </div>
+                        <div class="series-game-info">
+                            <h4 class="series-game-title">Heroes of Might and Magic® 5: Bundle</h4>
+                            <p class="series-game-price">$14.99</p>
+                            <button class="series-game-btn">
+                                <i class="ph ph-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="modal-footer">
+                <div class="modal-total">Total: $2.99</div>
+                <div class="modal-footer-buttons">
+                    <button class="modal-btn-secondary" id="noThanksBtn">No Thanks, Go to Cart</button>
+                    <button class="modal-btn-primary" id="addAndGoBtn">Add & Go to Cart</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- GOG Preservation Promise Modal -->
+    <div class="modal-backdrop" id="preservationModal">
+        <div class="modal-panel">
+            <header class="modal-header">
+                <div class="preservation-modal-header">
+                     <img src="https://www.figma.com/api/mcp/asset/4bac8c5b-77f3-4554-9416-52579354304c" alt="Shield Icon" class="shield-icon">
+                    <h2 class="preservation-modal-title">The GOG Preservation Promise</h2>
+                </div>
+                <button class="modal-close" id="closePreservationModal" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </header>
+            <main class="preservation-modal-content">
+                <div class="preservation-modal-body">
+                    <div class="promise-item">
+                        <i class="ph ph-wrench promise-icon"></i>
+                        <div>
+                            <h3 class="promise-title">Modern Compatibility</h3>
+                            <p class="promise-text">We enhance good old games ourselves to guarantee they run on modern systems, even if the original developers no longer support them.</p>
+                        </div>
+                    </div>
+                    <div class="promise-item">
+                        <i class="ph ph-lock promise-icon"></i>
+                        <div>
+                            <h3 class="promise-title">DRM-Free Forever</h3>
+                            <p class="promise-text">This is the best version you can buy. It's truly yours to download, back up, and play forever without any online checks.</p>
+                        </div>
+                    </div>
+                    <div class="promise-item">
+                        <i class="ph ph-headphones promise-icon"></i>
+                        <div>
+                            <h3 class="promise-title">Dedicated Support</h3>
+                            <p class="promise-text">We're the only platform providing dedicated tech support for these classics. If you have an issue, our expert team is here to help.</p>
+                        </div>
+                    </div>
+                </div>
+                <footer class="preservation-modal-footer">
+                    <a href="#">Learn more about our mission <i class="ph ph-arrow-right"></i></a>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Reviews Modal -->
+    <div class="reviews-modal-backdrop" id="reviewsModal">
+        <div class="reviews-modal-panel">
+            <header class="reviews-modal-header">
+                <div>
+                    <h2 class="reviews-modal-title">Player Reviews</h2>
+                    <p class="reviews-modal-subtitle">1,483 reviews from the community</p>
+                </div>
+                <button class="reviews-modal-close" id="closeReviewsModal" aria-label="Close reviews">
+                    <i class="ph ph-x"></i>
+                </button>
+            </header>
+            
+            <div class="reviews-list-container" id="reviewsListContainer">
+                <!-- Reviews will be dynamically loaded here -->
+            </div>
+            
+            <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                Loading more reviews...
+            </div>
+            
+            <div class="full-reviews-link">
+                <a href="#">Go to Full Reviews Page</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchClose = document.getElementById('searchClose');
+
+            // Show/hide close icon based on input value
+            searchInput.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    searchClose.classList.add('active');
+                } else {
+                    searchClose.classList.remove('active');
+                }
+            });
+
+            // Clear search input when close icon is clicked
+            searchClose.addEventListener('click', function() {
+                searchInput.value = '';
+                searchClose.classList.remove('active');
+                searchInput.focus();
+            });
+
+            // Modal Functionality
+            const addToCollectionBtn = document.getElementById('addToCollectionBtn');
+            const upsellModal = document.getElementById('upsellModal');
+            const closeModalBtn = document.getElementById('close-upsell-modal');
+            const noThanksBtn = document.getElementById('noThanksBtn');
+            const addAndGoBtn = document.getElementById('addAndGoBtn');
+
+            // Open modal when "Add to Collection" is clicked
+            if (addToCollectionBtn) {
+                addToCollectionBtn.addEventListener('click', function() {
+                    upsellModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Close modal functions
+            function closeModal() {
+                upsellModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Close modal when X button is clicked
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+
+            // Close modal when "No Thanks" is clicked
+            if (noThanksBtn) {
+                noThanksBtn.addEventListener('click', function() {
+                    closeModal();
+                    alert('Redirecting to cart...');
+                });
+            }
+
+            // Close modal when "Add & Go to Cart" is clicked
+            if (addAndGoBtn) {
+                addAndGoBtn.addEventListener('click', function() {
+                    closeModal();
+                    alert('Adding selected items and redirecting to cart...');
+                });
+            }
+
+            // Close modal when clicking outside the panel
+            upsellModal.addEventListener('click', function(e) {
+                if (e.target === upsellModal) {
+                    closeModal();
+                }
+            });
+
+            // Close modal on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && upsellModal.classList.contains('active')) {
+                    closeModal();
+                }
+                if (e.key === 'Escape' && preservationModal.classList.contains('active')) {
+                    closePreservModal();
+                }
+                if (e.key === 'Escape' && reviewsModal.classList.contains('active')) {
+                    closeReviewsModalFunc();
+                }
+            });
+
+            // Collector's Note Generator
+            const generateSummaryBtn = document.querySelector('.btn-ai');
+            const noteBox = document.querySelector('.note-box');
+
+            if (generateSummaryBtn && noteBox) {
+                const quotes = [
+                    {
+                        text: `"I first played Chrono Trigger in 1996. It wasn't just a game; it was a formative experience. GOG having this version... is like buying back a piece of my childhood."`,
+                        author: "— a_time_traveler"
+                    },
+                    {
+                        text: "The promise of true player agency delivered in a trench coat and sunglasses. Its sprawling levels and multi-path solutions created a sandbox of emergent gameplay that few titles have matched since. This is a masterclass in choice-driven design, and essential for understanding the DNA of modern immersive sims.",
+                        author: ""
+                    },
+                    {
+                        text: `A game that dared to ask "What can change the nature of a man?" and made the answer its central mechanic. It traded the sword for the word, proving a role-playing game's most powerful weapon could be its narrative. Its literary depth remains unparalleled; a mandatory piece for any collector who values storytelling above all.`,
+                        author: ""
+                    },
+                    {
+                        text: "More than a game, this is a digital board game of infinite possibilities. Its perfect blend of strategy, town management, and RPG elements created a formula so timeless it remains the benchmark for the genre. An essential cornerstone for any strategy fan's collection, endlessly replayable and eternally rewarding.",
+                        author: ""
+                    }
+                ];
+
+                let currentQuoteIndex = 0;
+                const noteTextElement = noteBox.querySelector('p:first-child');
+                const noteAuthorElement = noteBox.querySelector('p:last-child');
+
+                generateSummaryBtn.addEventListener('click', function() {
+                    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                    
+                    const newQuote = quotes[currentQuoteIndex];
+
+                    noteTextElement.innerHTML = newQuote.text;
+                    noteAuthorElement.innerHTML = newQuote.author;
+                });
+            }
+
+            // Compatibility Check Functionality
+            const compatibilityCheckLink = document.getElementById('compatibilityCheckLink');
+            const compatibilityResult = document.getElementById('compatibilityResult');
+            const compatibilityClose = document.getElementById('compatibilityClose');
+            const estimateFill = document.getElementById('estimateFill');
+
+            if (compatibilityCheckLink && compatibilityResult) {
+                compatibilityCheckLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Toggle the compatibility result card
+                    if (!compatibilityResult.classList.contains('active')) {
+                        compatibilityResult.classList.add('active');
+                        
+                        // Animate the estimate bar fill
+                        setTimeout(() => {
+                            if (estimateFill) {
+                                estimateFill.style.width = '98%';
+                            }
+                        }, 100);
+                        
+                        // Smooth scroll to the result
+                        setTimeout(() => {
+                            compatibilityResult.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'nearest' 
+                            });
+                        }, 200);
+                    }
+                });
+            }
+
+            if (compatibilityClose && compatibilityResult) {
+                compatibilityClose.addEventListener('click', function() {
+                    compatibilityResult.classList.remove('active');
+                    if (estimateFill) {
+                        estimateFill.style.width = '0%';
+                    }
+                });
+            }
+
+            // Preservation Log Accordion
+            const preservationLogContainer = document.getElementById('preservationLogContainer');
+            const logToggleIcon = document.getElementById('logToggleIcon');
+
+            if (preservationLogContainer) {
+                preservationLogContainer.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                    if (this.classList.contains('expanded')) {
+                        logToggleIcon.classList.remove('ph-plus');
+                        logToggleIcon.classList.add('ph-minus');
+                    } else {
+                        logToggleIcon.classList.remove('ph-minus');
+                        logToggleIcon.classList.add('ph-plus');
+                    }
+                });
+            }
+
+            // Game Media Carousel Functionality
+            const mainMediaImage = document.getElementById('mainMediaImage');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const navDots = document.querySelectorAll('.nav-dot');
+
+            // Function to set active thumbnail and update main image
+            function setActiveMedia(index) {
+                // Remove active class from all thumbnails and dots
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                navDots.forEach(dot => dot.classList.remove('active'));
+
+                // Add active class to selected thumbnail and dot
+                const selectedThumbnail = document.querySelector(`.thumbnail[data-index="${index}"]`);
+                const selectedDot = document.querySelector(`.nav-dot[data-index="${index}"]`);
+                
+                if (selectedThumbnail && selectedDot) {
+                    selectedThumbnail.classList.add('active');
+                    selectedDot.classList.add('active');
+                    
+                    // Update main image
+                    const imageUrl = selectedThumbnail.getAttribute('data-image');
+                    if (imageUrl && mainMediaImage) {
+                        mainMediaImage.src = imageUrl;
+                    }
+                }
+            }
+
+            // Add click event to thumbnails
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    setActiveMedia(index);
+                });
+            });
+
+            // Add click event to navigation dots
+            navDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    setActiveMedia(index);
+                });
+            });
+
+            // Reviews Modal Functionality
+            const openReviewsModal = document.getElementById('openReviewsModal');
+            const reviewsModal = document.getElementById('reviewsModal');
+            const closeReviewsModal = document.getElementById('closeReviewsModal');
+            const reviewsListContainer = document.getElementById('reviewsListContainer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            let currentReviewPage = 0;
+            let isLoadingReviews = false;
+            let hasMoreReviews = true;
+
+            // Sample review data generator
+            const reviewAuthors = [
+                'SwordMaster89', 'RetroGamer', 'StrategyKing', 'NostalgiaFan', 'CastleLord',
+                'TurnBasedPro', 'PixelWarrior', 'ClassicCollector', 'HeroicPlayer', 'MapConqueror',
+                'OldSchoolGamer', 'TacticalMind', 'DragonSlayer', 'QuestSeeker', 'MagicUser',
+                'KnightErrant', 'EmpireBuilder', 'LegendaryHero', 'TimelessGamer', 'VintagePlayer'
+            ];
+
+            const positiveReviews = [
+                "This game is an absolute masterpiece. The strategic depth, memorable campaigns, and incredible soundtrack make it a timeless classic. Every playthrough feels fresh.",
+                "After 20+ years, this is still the best turn-based strategy game ever made. The balance, the variety, the replayability - nothing comes close.",
+                "A perfect blend of strategy, exploration, and storytelling. The campaign is engaging, the random maps offer endless variety, and the modding community keeps it alive.",
+                "This is what gaming perfection looks like. Every faction is unique and balanced, the tactical combat is brilliant, and the music is absolutely legendary.",
+                "I've been playing since 1999 and I still discover new strategies. The depth of this game is incredible. A must-have for any strategy fan.",
+                "The GOG version runs flawlessly on Windows 11. Great to see this classic getting the preservation it deserves. Still as addictive as ever.",
+                "Twenty-five years later and this is still my go-to strategy game. The art direction, gameplay mechanics, and overall polish are timeless.",
+                "If you love turn-based strategy, this is essential. The campaigns are epic, the random map generator is endlessly replayable, and the community is still active."
+            ];
+
+            const negativeReviews = [
+                "The AI can be frustratingly predictable at times. Still a great game, but the computer opponents could have been smarter.",
+                "Graphics haven't aged particularly well, even with the HD mod. Gameplay is still solid, but it shows its age visually.",
+                "The learning curve is steep for newcomers. The tutorial doesn't cover everything, and you'll need external guides to master the game.",
+                "Some campaigns are incredibly difficult without prior knowledge. The difficulty spikes can be frustrating for new players."
+            ];
+
+            const mixedReviews = [
+                "Great game overall, but some factions feel more powerful than others. The balance isn't perfect, but it's still incredibly fun.",
+                "The campaign is excellent, but the AI in random maps can be either too easy or frustratingly cheap. Still worth playing though.",
+                "Love the core gameplay, but the interface feels dated. Takes some getting used to if you're coming from modern strategy games.",
+                "Excellent strategy game with minor issues. The pathfinding can be wonky and some spells feel overpowered, but the positives far outweigh the negatives.",
+                "A classic for a reason, though not without flaws. The endgame can drag on, and some maps are poorly balanced. Still highly recommended."
+            ];
+
+            function generateReview(index) {
+                const rand = Math.random();
+                let reviewType, reviewText, rating;
+                
+                if (rand < 0.65) {
+                    reviewType = 'positive';
+                    reviewText = positiveReviews[Math.floor(Math.random() * positiveReviews.length)];
+                    rating = 'positive';
+                } else if (rand < 0.85) {
+                    reviewType = 'mixed';
+                    reviewText = mixedReviews[Math.floor(Math.random() * mixedReviews.length)];
+                    rating = 'mixed';
+                } else {
+                    reviewType = 'negative';
+                    reviewText = negativeReviews[Math.floor(Math.random() * negativeReviews.length)];
+                    rating = 'negative';
+                }
+
+                const author = reviewAuthors[Math.floor(Math.random() * reviewAuthors.length)];
+                const hours = Math.floor(Math.random() * 500) + 10;
+                const helpful = Math.floor(Math.random() * 200);
+                const daysAgo = Math.floor(Math.random() * 365) + 1;
+                const dateText = daysAgo === 1 ? 'Posted yesterday' : `Posted ${daysAgo} days ago`;
+                const avatar = author.charAt(0).toUpperCase();
+
+                const ratingBadge = rating === 'positive' 
+                    ? '<i class="ph ph-thumbs-up"></i> Recommended' 
+                    : rating === 'negative' 
+                    ? '<i class="ph ph-thumbs-down"></i> Not Recommended'
+                    : '<i class="ph ph-hand-palm"></i> Mixed Feelings';
+
+                return `
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author-section">
+                                <div class="review-avatar">${avatar}</div>
+                                <div class="review-author-info">
+                                    <div class="review-author">${author}</div>
+                                    <div class="review-date">${dateText}</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <div class="review-rating-badge ${rating}">
+                                    ${ratingBadge}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-text">${reviewText}</div>
+                        <div class="review-helpful">
+                            <span class="review-hours">${hours} hours played</span>
+                            <button class="review-helpful-btn">
+                                <i class="ph ph-thumbs-up"></i>
+                                Helpful (${helpful})
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function loadReviews() {
+                if (isLoadingReviews || !hasMoreReviews) return;
+
+                isLoadingReviews = true;
+                loadingIndicator.style.display = 'block';
+
+                // Simulate loading delay
+                setTimeout(() => {
+                    const reviewsToLoad = 15;
+                    let newReviewsHTML = '';
+
+                    for (let i = 0; i < reviewsToLoad; i++) {
+                        newReviewsHTML += generateReview(currentReviewPage * reviewsToLoad + i);
+                    }
+
+                    reviewsListContainer.insertAdjacentHTML('beforeend', newReviewsHTML);
+                    currentReviewPage++;
+                    isLoadingReviews = false;
+                    loadingIndicator.style.display = 'none';
+
+                    // Stop loading after 5 pages (75 reviews)
+                    if (currentReviewPage >= 5) {
+                        hasMoreReviews = false;
+                    }
+                }, 800);
+            }
+
+            // Open reviews modal
+            if (openReviewsModal) {
+                openReviewsModal.addEventListener('click', function() {
+                    reviewsModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Load initial reviews if not already loaded
+                    if (currentReviewPage === 0) {
+                        loadReviews();
+                    }
+                });
+            }
+
+            // Close reviews modal
+            function closeReviewsModalFunc() {
+                reviewsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (closeReviewsModal) {
+                closeReviewsModal.addEventListener('click', closeReviewsModalFunc);
+            }
+
+            // Close modal when clicking outside
+            reviewsModal.addEventListener('click', function(e) {
+                if (e.target === reviewsModal) {
+                    closeReviewsModalFunc();
+                }
+            });
+
+            // Infinite scroll functionality
+            if (reviewsListContainer) {
+                reviewsListContainer.addEventListener('scroll', function() {
+                    const scrollPosition = this.scrollTop + this.clientHeight;
+                    const scrollHeight = this.scrollHeight;
+
+                    // Load more when scrolled to 80% of the container
+                    if (scrollPosition >= scrollHeight * 0.8) {
+                        loadReviews();
+                    }
+                });
+            }
+
+            // Preservation Modal Functionality
+            const readMoreLink = document.getElementById('readMoreLink');
+            const preservationModal = document.getElementById('preservationModal');
+            const closePreservationModal = document.getElementById('closePreservationModal');
+
+            // Open preservation modal
+            if(readMoreLink) {
+                readMoreLink.addEventListener('click', function() {
+                    preservationModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Function to close preservation modal
+            function closePreservModal() {
+                preservationModal.classList.remove('active');
+                if (!upsellModal.classList.contains('active') && !reviewsModal.classList.contains('active')) {
+                     document.body.style.overflow = '';
+                }
+            }
+            
+            // Close preservation modal with X button
+            if(closePreservationModal){
+                closePreservationModal.addEventListener('click', closePreservModal);
+            }
+
+            // Close preservation modal by clicking backdrop
+            preservationModal.addEventListener('click', function(e) {
+                if (e.target === preservationModal) {
+                    closePreservModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

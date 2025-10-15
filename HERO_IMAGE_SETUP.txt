@@ -1,0 +1,51 @@
+═══════════════════════════════════════════════════════════════════
+    HERO IMAGE SETUP - Quick Instructions
+═══════════════════════════════════════════════════════════════════
+
+✅ WHAT I'VE DONE:
+
+1. ✓ Updated HTML to reference the new hero image
+2. ✓ Created images folder: gog-product-page/images/
+3. ✓ Enhanced CSS for better image display (removed luminosity filter)
+4. ✓ Added gradient overlay for better text readability
+5. ✓ Updated alt text for accessibility
+
+───────────────────────────────────────────────────────────────────
+
+📋 WHAT YOU NEED TO DO:
+
+1. Right-click the knight on horseback image from your chat
+2. Save it to: gog-product-page/images/
+3. Name it: hero-knight.jpg
+4. Refresh the page in your browser
+
+───────────────────────────────────────────────────────────────────
+
+📂 FILE STRUCTURE:
+
+gog-product-page/
+├── index-standalone.html  (✓ Updated)
+├── images/
+│   ├── hero-knight.jpg    (← Save your image here)
+│   └── README.md          (Additional instructions)
+└── HERO_IMAGE_SETUP.txt   (This file)
+
+───────────────────────────────────────────────────────────────────
+
+🎨 NEW HERO SECTION FEATURES:
+
+• Full-color display (no more luminosity filter)
+• Gradient overlay on left side for text readability
+• Perfect positioning for the knight image
+• Responsive and adaptive layout
+• Maintains 645px height for optimal display
+
+───────────────────────────────────────────────────────────────────
+
+💡 TIP: The image shows a blue and gold armored knight on horseback,
+which is perfect for Heroes of Might and Magic 3!
+
+═══════════════════════════════════════════════════════════════════
+
+
+
