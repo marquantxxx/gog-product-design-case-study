@@ -1,6 +1,6 @@
 # GOG Product Page
 
-A faithful recreation of the GOG.com game product page for "Heroes of Might and Magic® 3: Complete" from Figma design.
+A recreation of the GOG.com game product page for "Heroes of Might and Magic® 3: Complete" from Figma design (case study)
 
 ## Features
 
