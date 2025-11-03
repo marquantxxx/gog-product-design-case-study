@@ -16,6 +16,8 @@ A recreation of the GOG.com game product page for "Heroes of Might and Magic® 3
   - Technical requirements (min/recommended)
   - Language support information
 
+  read case study here: https://www.linkedin.com/pulse/case-study-redesigning-classic-modern-collector-gog-page-sylvester-6euif
+
 ## Quick Start (No Installation Required!)
 
 **The easiest way to view the page:**
